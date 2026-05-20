@@ -21,7 +21,6 @@ class User(Base):
 
     surveys = relationship("SurveyEntry", back_populates="owner")
     diary_entries = relationship("DiaryEntry", back_populates="owner")
-    achievements = relationship("Achievement", back_populates="owner")
 
 class SurveyEntry(Base):
     __tablename__ = "survey_entries"
@@ -55,18 +54,6 @@ class DiaryEntry(Base):
     emotion_label = Column(String, nullable=True)
 
     owner = relationship("User", back_populates="diary_entries")
-
-class Achievement(Base):
-
-    __tablename__ = "achievements"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    achievement_type = Column(String)
-    unlocked_at = Column(DateTime, default=datetime.utcnow)
-
-    owner = relationship("User", back_populates="achievements")
-
 
 class QuestProgress(Base):
     __tablename__ = "quest_progress"
